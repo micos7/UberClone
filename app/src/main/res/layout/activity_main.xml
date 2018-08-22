@@ -48,7 +48,6 @@
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_centerHorizontal="true"
         android:weightSum="2"
         android:layout_above="@+id/txt_rider_app"
         android:layout_margin="16dp"
