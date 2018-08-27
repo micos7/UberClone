@@ -5,7 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
+import android.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -83,25 +83,25 @@ public class MainActivity extends AppCompatActivity {
 
         dialog.setView(login_layout);
 
-        dialog.setPositiveButton("SIGN IN", new DialogInterface.OnClickListener() {
+        AlertDialog.Builder builder = dialog.setPositiveButton("SIGN IN", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
 
                 btnSignIn.setEnabled(false);
 
-                if(TextUtils.isEmpty(edtEmail.getText().toString())){
+                if (TextUtils.isEmpty(edtEmail.getText().toString())) {
                     Snackbar.make(rootLayout, "Please enter email address", Snackbar.LENGTH_SHORT).show();
                     return;
                 }
 
 
-                if(TextUtils.isEmpty(edtPassword.getText().toString())){
+                if (TextUtils.isEmpty(edtPassword.getText().toString())) {
                     Snackbar.make(rootLayout, "Please enter password", Snackbar.LENGTH_SHORT).show();
                     return;
                 }
 
-                if(edtPassword.getText().toString().length() < 6){
+                if (edtPassword.getText().toString().length() < 6) {
                     Snackbar.make(rootLayout, "Password should be at least 6 characters", Snackbar.LENGTH_SHORT).show();
                     return;
                 }
@@ -109,19 +109,19 @@ public class MainActivity extends AppCompatActivity {
                 final SpotsDialog waitingDialog = new SpotsDialog(MainActivity.this);
                 waitingDialog.show();
 
-                auth.signInWithEmailAndPassword(edtEmail.getText().toString(),edtPassword.getText().toString())
+                auth.signInWithEmailAndPassword(edtEmail.getText().toString(), edtPassword.getText().toString())
                         .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                             @Override
                             public void onSuccess(AuthResult authResult) {
                                 waitingDialog.dismiss();
-                                startActivity(new Intent(MainActivity.this,Welcome.class));
+                                startActivity(new Intent(MainActivity.this, Welcome.class));
                                 finish();
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         waitingDialog.dismiss();
-                        Snackbar.make(rootLayout, "Fail "+e.getMessage(), Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(rootLayout, "Fail " + e.getMessage(), Snackbar.LENGTH_SHORT).show();
                         btnSignIn.setEnabled(true);
                     }
                 });
